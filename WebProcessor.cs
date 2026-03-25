@@ -296,7 +296,7 @@ namespace NuciWeb.Automation
         /// <param name="xpath">The XPath to match the element against.</param>
         /// <returns>The class name of the first matching element.</returns>
         public string GetClass(string xpath)
-            => GetAttribute(xpath, "class");
+            => GetAttribute(xpath, HtmlAttributeNames.Class);
 
         /// <summary>
         /// Gets the class names of all elements matching the XPath in the current tab of the web processor.
@@ -304,7 +304,7 @@ namespace NuciWeb.Automation
         /// <param name="xpath">The XPath to match elements against.</param>
         /// <returns>A list of class names of all matching elements.</returns>
         public IList<string> GetClassOfMany(string xpath)
-            => GetAttributeOfMany(xpath, "class");
+            => GetAttributeOfMany(xpath, HtmlAttributeNames.Class);
 
         /// <summary>
         /// Gets the class names of the first element matching the XPath in the current tab of the web processor.
@@ -320,7 +320,7 @@ namespace NuciWeb.Automation
         /// <param name="xpath">The XPath to match the element against.</param>
         /// <returns>The hyperlink of the first matching element.</returns>
         public string GetHyperlink(string xpath)
-            => GetAttribute(xpath, "href");
+            => GetAttribute(xpath, HtmlAttributeNames.Hyperlink);
 
         /// <summary>
         /// Gets the hyperlinks of all elements matching the XPath in the current tab of the web processor.
@@ -328,7 +328,7 @@ namespace NuciWeb.Automation
         /// <param name="xpath">The XPath to match elements against.</param>
         /// <returns>A list of hyperlinks of all matching elements.</returns>
         public IList<string> GetHyperlinkOfMany(string xpath)
-            => GetAttributeOfMany(xpath, "href");
+            => GetAttributeOfMany(xpath, HtmlAttributeNames.Hyperlink);
 
         /// <summary>
         /// Gets the source of the first element matching the XPath in the current tab of the web processor.
@@ -336,7 +336,7 @@ namespace NuciWeb.Automation
         /// <param name="xpath">The XPath to match the element against.</param>
         /// <returns>The source of the first matching element.</returns>
         public string GetSource(string xpath)
-            => GetAttribute(xpath, "src");
+            => GetAttribute(xpath, HtmlAttributeNames.Source);
 
         /// <summary>
         /// Gets the sources of all elements matching the XPath in the current tab of the web processor.
@@ -344,7 +344,7 @@ namespace NuciWeb.Automation
         /// <param name="xpath">The XPath to match elements against.</param>
         /// <returns>A list of sources of all matching elements.</returns>
         public IList<string> GetSourceOfMany(string xpath)
-            => GetAttributeOfMany(xpath, "src");
+            => GetAttributeOfMany(xpath, HtmlAttributeNames.Source);
 
         /// <summary>
         /// Gets the style of the first element matching the XPath in the current tab of the web processor.
@@ -352,7 +352,7 @@ namespace NuciWeb.Automation
         /// <param name="xpath">The XPath to match the element against.</param>
         /// <returns>The style of the first matching element.</returns>
         public string GetStyle(string xpath)
-            => GetAttribute(xpath, "style");
+            => GetAttribute(xpath, HtmlAttributeNames.Style);
 
         /// <summary>
         /// Gets the styles of all elements matching the XPath in the current tab of the web processor.
@@ -360,7 +360,7 @@ namespace NuciWeb.Automation
         /// <param name="xpath">The XPath to match elements against.</param>
         /// <returns>A list of styles of all matching elements.</returns>
         public IList<string> GetStyleOfMany(string xpath)
-            => GetAttributeOfMany(xpath, "style");
+            => GetAttributeOfMany(xpath, HtmlAttributeNames.Style);
 
         /// <summary>
         /// Gets the ID of the first element matching the XPath in the current tab of the web processor.
@@ -368,7 +368,7 @@ namespace NuciWeb.Automation
         /// <param name="xpath">The XPath to match the element against.</param>
         /// <returns>The ID of the first matching element.</returns>
         public string GetId(string xpath)
-            => GetAttribute(xpath, "id");
+            => GetAttribute(xpath, HtmlAttributeNames.Id);
 
         /// <summary>
         /// Gets the IDs of all elements matching the XPath in the current tab of the web processor.
@@ -376,7 +376,7 @@ namespace NuciWeb.Automation
         /// <param name="xpath">The XPath to match elements against.</param>
         /// <returns>A list of IDs of all matching elements.</returns>
         public IList<string> GetIdOfMany(string xpath)
-            => GetAttributeOfMany(xpath, "id");
+            => GetAttributeOfMany(xpath, HtmlAttributeNames.Id);
 
         /// <summary>
         /// Gets the value of the first element matching the XPath in the current tab of the web processor.
@@ -384,7 +384,7 @@ namespace NuciWeb.Automation
         /// <param name="xpath">The XPath to match the element against.</param>
         /// <returns>The value of the first matching element.</returns>
         public string GetValue(string xpath)
-            => GetAttribute(xpath, "value");
+            => GetAttribute(xpath, HtmlAttributeNames.Value);
 
         /// <summary>
         /// Gets the values of all elements matching the XPath in the current tab of the web processor.
@@ -392,7 +392,7 @@ namespace NuciWeb.Automation
         /// <param name="xpath">The XPath to match elements against.</param>
         /// <returns>A list of values of all matching elements.</returns>
         public IList<string> GetValueOfMany(string xpath)
-            => GetAttributeOfMany(xpath, "value");
+            => GetAttributeOfMany(xpath, HtmlAttributeNames.Value);
 
         /// <summary>
         /// Gets the text of the first element matching the XPath in the current tab of the web processor.

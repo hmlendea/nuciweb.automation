@@ -13,7 +13,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="../nuciweb/NuciWeb.csproj" />
+    <PackageReference Include="NuciWeb" Version="4.0.0" />
   </ItemGroup>
 
 </Project>
