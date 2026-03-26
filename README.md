@@ -35,18 +35,16 @@ This package is intended to sit between application code and a concrete automati
 
 ## Installation
 
-Add the package reference to your project:
+[![Get it from NuGet](https://raw.githubusercontent.com/hmlendea/readme-assets/master/badges/stores/nuget.png)](https://nuget.org/packages/NuciWeb.Automation)
 
-```xml
-<ItemGroup>
-  <PackageReference Include="NuciWeb.Automation" Version="1.0.0" />
-</ItemGroup>
-```
-
-Or install it with the .NET CLI:
-
+**.NET CLI**:
 ```bash
 dotnet add package NuciWeb.Automation
+```
+
+**Package Manager**:
+```powershell
+Install-Package NuciWeb.Automation
 ```
 
 ## When To Use It
