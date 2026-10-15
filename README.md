@@ -192,3 +192,7 @@ NuciWeb.Automation follows coordinated disclosure. Report vulnerabilities via [G
 ## 📜 Code of Conduct
 
 This project follows a code of conduct to ensure a welcoming and respectful environment for all participants. See [CODE_OF_CONDUCT.md](./CODE_OF_CONDUCT.md) for the full policy, including expected conduct, unacceptable conduct, reporting concerns, and enforcement.
+
+## 🏗️ Architecture
+
+NuciWeb.Automation is an in-process .NET library that separates shared browser-automation orchestration from concrete browser-driver implementations. See [ARCHITECTURE.md](./ARCHITECTURE.md) for the current system context, component responsibilities, dependency rules, runtime flows, extension points, and testing boundaries.
