@@ -89,35 +89,7 @@ dotnet test NuciWeb.Automation.UnitTests/NuciWeb.Automation.UnitTests.csproj
 
 ## 📋 Code of Conduct
 
-### Our Pledge
-
-In the interest of fostering an open and welcoming environment, we as contributors and maintainers pledge to making participation in this project a harassment-free experience for everyone, regardless of age, body size, disability, ethnicity, sex characteristics, gender identity and expression, sexual orientation, religion, or technology choice.
-
-### Our Standards
-
-Examples of behaviour that contributes to a positive environment include:
-
-- Using welcoming and inclusive language
-- Being respectful of differing viewpoints and experiences
-- Gracefully accepting constructive criticism
-- Focusing on what is best for the community
-- Showing empathy towards other community members
-
-### Enforcement Maintainers
-
-Project maintainers have the right to remove, edit, or reject comments, commits, code, issues, and other contributions that are not aligned with this Code of Conduct.
-
-### Scope
-
-This Code of Conduct applies both in project spaces and in public spaces when a person is representing the project or its community.
-
-### Enforcement
-
-Instances of abusive, harassing, or otherwise unacceptable behaviour may be reported by opening an issue or contacting the project team at hmlendea@nucilandia.ro.
-
-### Enforcement
-
-Project maintainers who do not follow or enforce the Code of Conduct fairly and consistently may be removed from their roles.
+Please refer to the dedicated [CODE_OF_CONDUCT.md](./CODE_OF_CONDUCT.md) file for the full code of conduct policy, including expected conduct, unacceptable conduct, reporting concerns, and enforcement.
 
 ## 🔒 Security
 

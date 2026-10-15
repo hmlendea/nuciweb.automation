@@ -188,3 +188,7 @@ See the [contributing guidelines](./CONTRIBUTING.md) for details on how to repor
 ## 🔒 Security
 
 NuciWeb.Automation follows coordinated disclosure. Report vulnerabilities via [GitHub Security Advisories](https://github.com/hmlendea/nuciweb.automation/security/advisories) or email hmlendea@nucilandia.ro. See [SECURITY.md](./SECURITY.md) for supported versions, scope, and disclosure policy.
+
+## 📜 Code of Conduct
+
+This project follows a code of conduct to ensure a welcoming and respectful environment for all participants. See [CODE_OF_CONDUCT.md](./CODE_OF_CONDUCT.md) for the full policy, including expected conduct, unacceptable conduct, reporting concerns, and enforcement.
