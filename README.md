@@ -164,3 +164,7 @@ The `RetryOnDomFailure` property enables retry logic for some read operations su
 ## License
 
 This project is licensed under the GNU General Public License v3.0 or later. See [LICENSE](./LICENSE).
+
+## 🛡️ Privacy and Data
+
+NuciWeb.Automation does not collect, transmit, or process personal data. It provides a backend-agnostic browser automation abstraction; any data handling occurs in the consuming application and its chosen driver. See [PRIVACY.md](./PRIVACY.md) for details.
