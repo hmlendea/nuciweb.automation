@@ -1,173 +1,189 @@
-[![Donate](https://img.shields.io/badge/-%E2%99%A5%20Donate-%23ff69b4)](https://hmlendea.go.ro/funding) [![Build Status](https://github.com/hmlendea/nuciweb.automation/actions/workflows/dotnet.yml/badge.svg)](https://github.com/hmlendea/nuciweb.automation/actions/workflows/dotnet.yml) [![Latest GitHub release](https://img.shields.io/github/v/release/hmlendea/nuciweb.automation)](https://github.com/hmlendea/nuciweb.automation/releases/latest)
+[![Donate](https://img.shields.io/badge/-%E2%99%A5%20Donate-%23ff69b4)](https://hmlendea.go.ro/funding)
+[![Build Status](https://github.com/hmlendea/nuciweb.automation/actions/workflows/dotnet.yml/badge.svg)](https://github.com/hmlendea/nuciweb.automation/actions/workflows/dotnet.yml)
+[![Latest Release](https://img.shields.io/github/v/release/hmlendea/nuciweb.automation)](https://github.com/hmlendea/nuciweb.automation/releases/latest)
+[![NuGet](https://img.shields.io/nuget/v/NuciWeb.Automation)](https://nuget.org/packages/NuciWeb.Automation)
+[![License](https://img.shields.io/github/license/hmlendea/nuciweb.automation)](https://github.com/hmlendea/nuciweb.automation/blob/master/LICENSE)
 
 # NuciWeb.Automation
 
-## About
+NuciWeb.Automation is a .NET library that provides a backend-agnostic abstraction for browser automation. It centralizes tab management, navigation, waiting, DOM interaction, selection, scripting, and alert handling while concrete drivers implement the browser-specific operations.
 
-NuciWeb.Automation is a .NET library that defines a reusable abstraction for browser automation.
+## 📑 Table of Contents
 
-It provides:
+- [Capabilities](#capabilities)
+- [Usage](#usage)
+  - [Implementing A Backend](#implementing-a-backend)
+- [Compatibility](#compatibility)
+- [Installation](#installation)
+  - [Package Manager Installation](#package-manager-installation)
+- [Development](#development)
+  - [Requirements](#requirements)
+  - [Setup](#setup)
+  - [Build](#build)
+  - [Test](#test)
+  - [Formatting](#formatting)
+  - [Dependencies](#dependencies)
+- [GitHub Actions](#github-actions)
+- [Project Structure](#project-structure)
+- [Projects and Packages](#projects-and-packages)
+  - [Directories](#directories)
+- [Architecture](#architecture)
+- [Privacy and Data](#privacy-and-data)
+- [Contributing](#contributing)
+- [Code of Conduct](#code-of-conduct)
+- [Security](#security)
+- [Project Engagement](#project-engagement)
+- [License](#license)
 
-- a common `IWebProcessor` contract
-- a `WebProcessor` base class with shared behavior
-- tab management, navigation, waiting, DOM querying, text input, selection, and alert helpers
-- a backend-agnostic API that concrete browser drivers can implement
+## ✨ Capabilities
 
-This package is intended to sit between application code and a concrete automation backend. It centralizes the higher-level automation workflow so implementations can focus on the driver-specific operations.
+- Manage browser tabs and current-tab state.
+- Navigate to URLs and iframes with retry-aware operations.
+- Query and interact with elements through XPath expressions.
+- Read attributes, text, classes, styles, IDs, sources, values, and hyperlinks.
+- Wait for element existence, visibility, selection, and state changes.
+- Execute scripts, handle alerts, select options, and update checkboxes.
+- Retry selected DOM reads when `RetryOnDomFailure` is enabled.
 
-## Features
+## 🚀 Usage
 
-- Browser tab lifecycle management
-- URL navigation with retry support
-- IFrame navigation and switching
-- XPath-based element lookup and interaction
-- Text, attribute, class, style, id, source, and hyperlink retrieval
-- Visibility and existence checks
-- Waiting helpers for common automation scenarios
-- Alert handling
-- Script execution
-- Select element helpers
-- Optional retry behavior for transient DOM lookup failures
-
-## Target Framework
-
-- .NET 10.0
-
-## Installation
-
-[![Get it from NuGet](https://raw.githubusercontent.com/hmlendea/readme-assets/master/badges/stores/nuget.png)](https://nuget.org/packages/NuciWeb.Automation)
-
-**.NET CLI**:
-```bash
-dotnet add package NuciWeb.Automation
-```
-
-**Package Manager**:
-```powershell
-Install-Package NuciWeb.Automation
-```
-
-## When To Use It
-
-Use this library when you want to:
-
-- write automation code against a stable interface instead of a specific browser driver
-- share common automation logic across multiple backends
-- implement a custom browser automation provider while reusing the higher-level workflow already present in `WebProcessor`
-
-This package does not include a browser engine or a ready-to-run driver by itself. A concrete implementation must supply the low-level browser operations.
-
-## Basic Usage
-
-Application code can depend on `IWebProcessor` and stay independent from the browser backend:
+Application code can depend on `IWebProcessor` without depending on a specific browser backend:
 
 ```csharp
 using NuciWeb.Automation;
 
-public sealed class LoginAutomation
+public sealed class LoginAutomation(IWebProcessor webProcessor, string password)
 {
-	private readonly IWebProcessor webProcessor;
-
-	public LoginAutomation(IWebProcessor webProcessor)
-	{
-		this.webProcessor = webProcessor;
-	}
-
 	public void Run()
 	{
 		webProcessor.GoToUrl("https://example.com/login");
 		webProcessor.WaitForElementToBeVisible("//input[@name='email']");
-
 		webProcessor.SetText("//input[@name='email']", "user@example.com");
-		webProcessor.SetText("//input[@name='password']", "secret");
+		webProcessor.SetText("//input[@name='password']", password);
 		webProcessor.Click("//button[@type='submit']");
-
 		webProcessor.WaitForElementToExist("//main");
 	}
 }
 ```
 
-## Implementing A Backend
+The package does not include a browser engine or a ready-to-run driver. The consuming application must provide a concrete implementation.
 
-To create a working automation backend, inherit from `WebProcessor` and implement the abstract `Perform*` members.
+### Implementing A Backend
 
-The base class already handles:
-
-- tab bookkeeping
-- retry and wait orchestration
-- convenience overloads
-- higher-level selection and lookup helpers
-- common element existence and visibility workflows
-
-Example skeleton:
+Inherit from `WebProcessor` and implement its abstract `Perform*` members. The base class provides tab bookkeeping, waits, retries, convenience overloads, element helpers, and disposal of tracked tabs.
 
 ```csharp
-using System;
-using System.Collections.Generic;
-using NuciWeb.Automation;
-
 public sealed class CustomBrowserProcessor : WebProcessor
 {
 	protected override string PerformNewTab(string url) => throw new NotImplementedException();
 	protected override void PerformSwitchToTab(string tab) => throw new NotImplementedException();
 	protected override void PerformCloseTab(string tab) => throw new NotImplementedException();
 	protected override void PerformGoToUrl(string url, int httpRetries, TimeSpan retryDelay) => throw new NotImplementedException();
-	protected override void PerformSwitchToIframe(string xpath) => throw new NotImplementedException();
-	protected override void PerformRefresh() => throw new NotImplementedException();
-	protected override string PerformExecuteScript(string script) => throw new NotImplementedException();
-	protected override void PerformAcceptAlert() => throw new NotImplementedException();
-	protected override void PerformDismissAlert() => throw new NotImplementedException();
-	protected override string PerformGetPageSource() => throw new NotImplementedException();
-	protected override IEnumerable<string> PerformGetAttribute(string xpath, string attribute) => throw new NotImplementedException();
-	protected override IEnumerable<string> PerformGetText(string xpath) => throw new NotImplementedException();
-	protected override IEnumerable<string> PerformGetSelectedText(string xpath) => throw new NotImplementedException();
-	protected override void PerformSetText(string xpath, string text) => throw new NotImplementedException();
-	protected override bool PerformDoesElementExist(string xpath) => throw new NotImplementedException();
-	protected override bool PerformIsElementVisible(string xpath) => throw new NotImplementedException();
-	protected override bool PerformIsSelected(string xpath) => throw new NotImplementedException();
-	protected override bool PerformIsCheckboxChecked(string xpath) => throw new NotImplementedException();
-	protected override void PerformMoveToElement(string xpath) => throw new NotImplementedException();
-	protected override void PerformClick(string xpath) => throw new NotImplementedException();
-	protected override int PerformGetSelectOptionsCount(string xpath) => throw new NotImplementedException();
-	protected override void PerformSelectOptionByIndex(string xpath, int index) => throw new NotImplementedException();
-	protected override void PerformSelectOptionByText(string xpath, string text) => throw new NotImplementedException();
-	protected override void PerformSelectOptionByValue(string xpath, object value) => throw new NotImplementedException();
+	// Implement the remaining Perform* members for the selected browser backend.
 }
 ```
 
-## API Overview
+## 🧩 Compatibility
 
-The public API exposed by `IWebProcessor` includes these main groups of operations:
+| Component | Supported Versions | Notes |
+|-----------|--------------------|-------|
+| .NET | 10.0 | The library targets `net10.0`. |
+| Browser backend | Concrete implementation dependent | This package defines the abstraction and does not select a browser driver. |
 
-- Tab management: `Tabs`, `CurrentTab`, `NewTab`, `SwitchToTab`, `CloseTab`
-- Navigation: `GoToUrl`, `GoToIframe`, `SwitchToIframe`, `Refresh`
-- Scripting: `ExecuteScript`, `GetVariableValue`
-- Alerts: `AcceptAlert`, `DismissAlert`
-- Element inspection: `GetAttribute`, `GetText`, `GetValue`, `GetClass`, `GetId`, `GetStyle`, `GetSource`, `GetHyperlink`
-- Text interaction: `SetText`, `AppendText`, `ClearText`
-- State checks: `DoesElementExist`, `IsElementVisible`, `IsSelected`, `HasClass`
-- Waiting helpers: `Wait`, `WaitForElementToExist`, `WaitForElementToBeVisible`, `WaitForAnyElementToExist`, `WaitForAllElementsToBeVisible`, and related methods
-- Selection helpers: `SelectOptionByIndex`, `SelectOptionByValue`, `SelectOptionByText`, `SelectRandomOption`
-- Pointer interaction: `MoveToElement`, `Click`, `ClickAny`, `UpdateCheckbox`
+## 📦 Installation
 
-## DOM Failure Retries
+[![Obtain it from NuGet](https://raw.githubusercontent.com/hmlendea/readme-assets/master/badges/stores/nuget.png)](https://nuget.org/packages/NuciWeb.Automation)
 
-The `RetryOnDomFailure` property enables retry logic for some read operations such as attribute, text, and selected-text retrieval. This is useful when the underlying browser backend occasionally fails during transient DOM updates.
+### Package Manager Installation
 
-## Design Notes
+```bash
+dotnet add package NuciWeb.Automation
+```
 
-- The API is XPath-centric.
-- The base class uses a small default polling delay for wait loops.
-- Navigation includes retry-aware overloads for transient HTTP failures.
-- Disposal closes tracked tabs through the abstraction instead of assuming a specific driver lifecycle.
+Or, via the `Package Manager Console`:
 
-## License
+```powershell
+Install-Package NuciWeb.Automation
+```
 
-This project is licensed under the GNU General Public License v3.0 or later. See [LICENSE](./LICENSE).
+## 🛠️ Development
+
+### Requirements
+
+- [.NET 10.0 SDK](https://dotnet.microsoft.com/download/dotnet/10.0)
+- Git
+
+### Setup
+
+```bash
+git clone https://github.com/hmlendea/nuciweb.automation.git
+cd nuciweb.automation
+dotnet restore
+```
+
+### Build
+
+```bash
+dotnet build --no-restore
+```
+
+### Test
+
+```bash
+dotnet test
+```
+
+### Formatting
+
+```bash
+dotnet format
+```
+
+### Dependencies
+
+| Package | Version | Scope | Purpose |
+|---------|---------|-------|---------|
+| `NuciWeb` | 4.1.0 | Runtime | Shared web utility types used by the automation abstraction. |
+| `NUnit` | 5.0.0 | Development | Unit-test framework. |
+| `Moq` | 4.21.0 | Development | Test doubles for unit tests. |
+
+## ⚙️ GitHub Actions
+
+| Workflow | Purpose | What it does |
+|----------|---------|--------------|
+| [`.NET`](https://github.com/hmlendea/nuciweb.automation/blob/master/.github/workflows/dotnet.yml) | Build validation | Restores, builds, and tests the solution on pushes and pull requests to `master`. |
+| [`GitHub Release`](https://github.com/hmlendea/nuciweb.automation/blob/master/.github/workflows/github-release.yml) | GitHub package release | Packs the project and uploads the NuGet package to a published GitHub release with a SHA256 checksum. |
+| [`NuGet.org Release`](https://github.com/hmlendea/nuciweb.automation/blob/master/.github/workflows/nuget-release.yml) | NuGet publication | Packs the project and publishes it to NuGet.org after a GitHub release is published. |
+
+## 🗂️ Project Structure
+
+The repository contains the library project, its unit tests, and shared repository documentation.
+
+### Projects and Packages
+
+| Project | Type | Purpose |
+|---------|------|---------|
+| `NuciWeb.Automation/` | .NET library | Public browser automation contract and shared orchestration. |
+| `NuciWeb.Automation.UnitTests/` | NUnit test project | Unit tests for the library behavior. |
+
+### Directories
+
+| Directory | Purpose |
+|-----------|---------|
+| `NuciWeb.Automation/Utils/` | Internal execution and retry utilities. |
+| `.github/workflows/` | Build and release automation. |
+
+## 🏗️ Architecture
+
+NuciWeb.Automation is an in-process .NET library that separates shared browser-automation orchestration from concrete browser-driver implementations.
+
+See the [architecture documentation](./ARCHITECTURE.md) for the system context, principal components, runtime flows, ownership boundaries, dependencies, constraints, and extension points.
 
 ## 🛡️ Privacy and Data
 
-NuciWeb.Automation does not collect, transmit, or process personal data. It provides a backend-agnostic browser automation abstraction; any data handling occurs in the consuming application and its chosen driver. See [PRIVACY.md](./PRIVACY.md) for details.
+NuciWeb.Automation does not collect, transmit, or process personal data. It provides a backend-agnostic browser automation abstraction; any data handling occurs in the consuming application and its chosen driver.
+
+For the detailed description of how the application handles privacy and personal data, see [PRIVACY.md](./PRIVACY.md).
 
 ## 🤝 Contributing
 
@@ -185,14 +201,25 @@ When doing so, please:
 
 See the [contributing guidelines](./CONTRIBUTING.md) for details on how to report issues, suggest enhancements, and submit changes.
 
-## 🔒 Security
-
-NuciWeb.Automation follows coordinated disclosure. Report vulnerabilities via [GitHub Security Advisories](https://github.com/hmlendea/nuciweb.automation/security/advisories) or email hmlendea@nucilandia.ro. See [SECURITY.md](./SECURITY.md) for supported versions, scope, and disclosure policy.
-
 ## 📜 Code of Conduct
 
-This project follows a code of conduct to ensure a welcoming and respectful environment for all participants. See [CODE_OF_CONDUCT.md](./CODE_OF_CONDUCT.md) for the full policy, including expected conduct, unacceptable conduct, reporting concerns, and enforcement.
+See the [Code of Conduct](./CODE_OF_CONDUCT.md) for the standards of conduct expected in all project spaces.
 
-## 🏗️ Architecture
+## 🔒 Security
 
-NuciWeb.Automation is an in-process .NET library that separates shared browser-automation orchestration from concrete browser-driver implementations. See [ARCHITECTURE.md](./ARCHITECTURE.md) for the current system context, component responsibilities, dependency rules, runtime flows, extension points, and testing boundaries.
+NuciWeb.Automation follows coordinated disclosure.
+
+For information on reporting security vulnerabilities, see [SECURITY.md](./SECURITY.md).
+
+## 💝 Project Engagement
+
+Discovered a problem or have a suggestion? [Open an issue](https://github.com/hmlendea/nuciweb.automation/issues)!
+
+If you find this project useful, consider [funding it](https://hmlendea.go.ro/funding) or starring ⭐️ it on GitHub!
+
+[![Donate](https://raw.githubusercontent.com/hmlendea/readme-assets/master/donate_generic.png)](https://hmlendea.go.ro/funding)
+
+## 📄 License
+
+This project is being distributed under the `GNU General Public License v3.0 or later`.
+See [LICENSE](./LICENSE) for additional information.
