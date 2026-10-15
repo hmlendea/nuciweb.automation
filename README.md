@@ -184,3 +184,7 @@ When doing so, please:
 - Raise a new [issue](https://github.com/hmlendea/nuciweb.automation/issues) for problems or suggestions
 
 See the [contributing guidelines](./CONTRIBUTING.md) for details on how to report issues, suggest enhancements, and submit changes.
+
+## 🔒 Security
+
+NuciWeb.Automation follows coordinated disclosure. Report vulnerabilities via [GitHub Security Advisories](https://github.com/hmlendea/nuciweb.automation/security/advisories) or email hmlendea@nucilandia.ro. See [SECURITY.md](./SECURITY.md) for supported versions, scope, and disclosure policy.
