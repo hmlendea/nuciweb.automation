@@ -55,7 +55,3 @@ Reports will be treated respectfully and shared only with people who require the
 Maintainers will acknowledge reports when practicable, assess them fairly, and provide a proportionate response. Possible responses include clarification, mediation, a request to cease particular conduct, removal of content, temporary restrictions, or permanent removal from project spaces.
 
 People who make a report in good faith will not be penalised for reporting. A report that is knowingly false, threatening, or retaliatory may itself violate this code.
-
-## 🙏 Acknowledgement
-
-This template is original project guidance informed by established open-source community practices, including themes found in the Contributor Covenant. It is not a reproduction of the Contributor Covenant.

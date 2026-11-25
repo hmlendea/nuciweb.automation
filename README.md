@@ -25,9 +25,10 @@ NuciWeb.Automation is a .NET library that provides a backend-agnostic abstractio
   - [Dependencies](#dependencies)
 - [GitHub Actions](#github-actions)
 - [Project Structure](#project-structure)
-- [Projects and Packages](#projects-and-packages)
+  - [Projects and Packages](#projects-and-packages)
   - [Directories](#directories)
 - [Architecture](#architecture)
+- [Documentation](#documentation)
 - [Privacy and Data](#privacy-and-data)
 - [Contributing](#contributing)
 - [Code of Conduct](#code-of-conduct)
@@ -177,13 +178,25 @@ The repository contains the library project, its unit tests, and shared reposito
 
 NuciWeb.Automation is an in-process .NET library that separates shared browser-automation orchestration from concrete browser-driver implementations.
 
-See the [architecture documentation](./ARCHITECTURE.md) for the system context, principal components, runtime flows, ownership boundaries, dependencies, constraints, and extension points.
+See the [architecture documentation](./ARCHITECTURE.md) for the system context, principal components, runtime processes, ownership boundaries, dependencies, constraints, and extension points.
+
+## 📚 Documentation
+
+The repository documentation records the library's public contract, implementation boundaries, execution flows, testing model, and maintenance guidance.
+
+| Resource | Description |
+|----------|-------------|
+| [Documentation index](./docs/INDEX.md) | Navigation catalogue for the generated documentation. |
+| [Quick start](./docs/quick-start.md) | Installation, first use, and adapter implementation guidance. |
+| [Architecture deep dive](./docs/architecture.md) | Component boundaries and delegation rules. |
+| [API reference](./docs/api-reference/INDEX.md) | Public interface and adapter-contract reference. |
+| [Execution flows](./docs/flows/navigation-and-tab-lifecycle.md) | Navigation, DOM interaction, waits, scripts, alerts, and selection. |
 
 ## 🛡️ Privacy and Data
 
 NuciWeb.Automation does not collect, transmit, or process personal data. It provides a backend-agnostic browser automation abstraction; any data handling occurs in the consuming application and its chosen driver.
 
-For the detailed description of how the application handles privacy and personal data, see [PRIVACY.md](./PRIVACY.md).
+For the detailed description of how the application handles privacy and personal data, see the [Privacy Statement](./PRIVACY.md).
 
 ## 🤝 Contributing
 
@@ -199,7 +212,7 @@ When doing so, please:
 - Include tests for additional or modified functionality
 - Raise a new [issue](https://github.com/hmlendea/nuciweb.automation/issues) for problems or suggestions
 
-See the [contributing guidelines](./CONTRIBUTING.md) for details on how to report issues, suggest enhancements, and submit changes.
+See the [Contributing Guidelines](./CONTRIBUTING.md) for details on how to report issues, suggest enhancements, and submit changes.
 
 ## 📜 Code of Conduct
 
@@ -209,13 +222,17 @@ See the [Code of Conduct](./CODE_OF_CONDUCT.md) for the standards of conduct exp
 
 NuciWeb.Automation follows coordinated disclosure.
 
-For information on reporting security vulnerabilities, see [SECURITY.md](./SECURITY.md).
+For information on reporting security vulnerabilities, see the [Security Policy](./SECURITY.md).
+
+## 💬 Support
+
+For support, please [open an issue](https://github.com/hmlendea/nuciweb.automation/issues).
 
 ## 💝 Project Engagement
 
-Discovered a problem or have a suggestion? [Open an issue](https://github.com/hmlendea/nuciweb.automation/issues)!
+Discovered a problem with NuciWeb.Automation or have a suggestion for it? [Open an issue](https://github.com/hmlendea/nuciweb.automation/issues)!
 
-If you find this project useful, consider [funding it](https://hmlendea.go.ro/funding) or starring ⭐️ it on GitHub!
+If you find this project useful, consider [funding it](https://hmlendea.go.ro/funding) and giving it a star ⭐️ on GitHub!
 
 [![Donate](https://raw.githubusercontent.com/hmlendea/readme-assets/master/donate_generic.png)](https://hmlendea.go.ro/funding)
 

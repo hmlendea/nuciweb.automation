@@ -7,16 +7,13 @@ This document describes the current architecture of the NuciWeb.Automation .NET 
 - [Purpose](#purpose)
 - [System Context](#system-context)
 - [Architectural Style](#architectural-style)
-- [Runtime Flow](#runtime-flow)
+- [Runtime Process](#runtime-process)
 - [Components](#components)
 - [Data Architecture](#data-architecture)
 - [Interfaces and Integrations](#interfaces-and-integrations)
-- [Key Flows](#key-flows)
+- [Key Processes](#key-processes)
   - [Navigation and Element Interaction](#navigation-and-element-interaction)
 - [Cross-Cutting Concerns](#cross-cutting-concerns)
-  - [Security and Privacy](#security-and-privacy)
-  - [Error Handling](#error-handling)
-  - [Concurrency and Resource Use](#concurrency-and-resource-use)
 - [Dependency Direction and Rules](#dependency-direction-and-rules)
 - [External Dependencies](#external-dependencies)
 - [Deployment and Operations](#deployment-and-operations)
@@ -24,14 +21,13 @@ This document describes the current architecture of the NuciWeb.Automation .NET 
 - [Testing and Verification](#testing-and-verification)
 - [Design Constraints](#design-constraints)
 - [Extension Points](#extension-points)
-  - [Browser Processor Implementation](#browser-processor-implementation)
 - [Architecture Decisions](#architecture-decisions)
 - [Source Map](#source-map)
 - [Related Documentation](#related-documentation)
 
 ## 🎯 Purpose
 
-NuciWeb.Automation provides a reusable, backend-agnostic abstraction for browser automation. This document records the system boundary, ownership rules, public contracts, and runtime behavior for maintainers and contributors so that changes can be evaluated against the library's stable extension points.
+NuciWeb.Automation provides a reusable, backend-agnostic abstraction for browser automation. This document records the system boundary, ownership rules, public contracts, and runtime behaviour for maintainers and contributors so that changes can be evaluated against the library's stable extension points.
 
 ## 🌐 System Context
 
@@ -39,9 +35,9 @@ The library is an in-process component embedded in a consuming application. The 
 
 ```mermaid
 flowchart LR
-    App[Consuming application] -->|IWebProcessor operations| Library[NuciWeb.Automation]
-    Library -->|Perform* adapter calls| Driver[Concrete browser driver]
-    Driver -->|Browser commands and page data| Browser[Browser and web pages]
+    App[Consuming application] -->|IWebProcessor operations| Library[NuciWeb.Automation Library]
+    Library -->|Perform* adapter calls| Adapter[Concrete Browser Driver]
+    Adapter -->|Browser commands and page data| Browser[Browser and web pages]
     Library -->|Exceptions and results| App
 ```
 
@@ -57,8 +53,8 @@ The library combines a public abstraction with a template-method base class and 
 ```mermaid
 flowchart TB
     Contract[IWebProcessor]
-    Base[WebProcessor\nshared orchestration]
-    Adapter[Concrete WebProcessor subclass\nprotected Perform* operations]
+    Base[WebProcessor shared orchestration]
+    Adapter[Concrete WebProcessor subclass protected Perform* operations]
     Backend[Browser automation backend]
     Contract -. implemented by .-> Base
     Base -->|delegates driver-specific work| Adapter
@@ -71,7 +67,7 @@ The principal architecture boundaries are:
 - **Driver adapter:** Owns translation from protected `Perform*` methods to a concrete browser automation backend.
 - **External browser boundary:** Owns browser sessions, page execution, DOM state, alerts, and remote navigation.
 
-## 🔄 Runtime Flow
+## 🔄 Runtime Process
 
 ```mermaid
 sequenceDiagram
@@ -92,6 +88,7 @@ sequenceDiagram
 ```
 
 The principal runtime sequence is:
+
 1. The consuming application constructs a concrete `WebProcessor` implementation.
 2. The application invokes a public `IWebProcessor` operation.
 3. `WebProcessor` selects or creates a tab, applies waits or retries where defined, and delegates driver-specific work.
@@ -136,7 +133,7 @@ flowchart LR
 | `NuciWeb` HTML attribute names | Inbound dependency | `HtmlAttributeNames` values used for common attribute lookup | `WebProcessor` | Package/API incompatibility can prevent build or alter attribute selection |
 | Browser automation backend | Outbound | Backend-specific API selected by the concrete adapter | Consuming application and adapter | Network, browser, DOM, and driver failures are backend-specific |
 
-## 🔀 Key Flows
+## 🔀 Key Processes
 
 ### Navigation and Element Interaction
 
@@ -173,7 +170,7 @@ Navigation ensures a current tab, then delegates navigation with the configured 
 
 ### Security and Privacy
 
-The library does not authenticate users, authorise application actions, persist secrets, or collect telemetry. It accepts URLs, scripts, XPath expressions, text, and other values from the consuming application and passes relevant values to the concrete adapter. The consuming application and adapter own validation, credential handling, browser permissions, and sensitive-data protection. See [PRIVACY.md](PRIVACY.md) and [SECURITY.md](SECURITY.md).
+The library does not authenticate users, authorise application actions, persist secrets, or collect telemetry. It accepts URLs, scripts, XPath expressions, text, and other values from the consuming application and passes relevant values to the concrete adapter. The consuming application and adapter own validation, credential handling, browser permissions, and sensitive-data protection. See [PRIVACY.md](./PRIVACY.md) and [SECURITY.md](./SECURITY.md).
 
 ### Error Handling
 
@@ -198,6 +195,7 @@ flowchart LR
 ```
 
 The principal dependency rules are:
+
 - Consumers depend on `IWebProcessor` or `WebProcessor`, not on library internals.
 - `WebProcessor` owns shared workflow and delegates backend-specific operations through `Perform*` methods.
 - Concrete adapters may depend on browser automation backends; the core library does not select or instantiate one.
@@ -208,9 +206,11 @@ The principal dependency rules are:
 | Dependency | Responsibility | Integration Boundary | Architectural Consequence |
 |------------|----------------|----------------------|---------------------------|
 | .NET 10.0 runtime and base class libraries | Runtime types, collections, timing, disposal, and threading | Public contract and `WebProcessor` | The package targets `net10.0` and requires that runtime compatibility |
-| `NuciWeb` 4.0.0 | Shared HTML attribute-name constants | `WebProcessor` attribute helpers | Attribute lookup depends on this package's API and version |
-| NUnit 4.2.2 | Unit-test framework | `NuciWeb.Automation.UnitTests` | Verification is organized as NUnit tests |
-| Moq 4.20.72 | Test doubles for processor behavior | `NuciWeb.Automation.UnitTests` | Tests can isolate shared orchestration from browser implementations |
+| `NuciWeb` 4.1.0 | Shared HTML attribute-name constants | `WebProcessor` attribute helpers | Attribute lookup depends on this package's API and version |
+| NUnit 5.0.0 | Unit-test framework | `NuciWeb.Automation.UnitTests` | Verification is organized as NUnit tests |
+| Moq 4.21.0 | Test doubles for processor behavior | `NuciWeb.Automation.UnitTests` | Tests can isolate shared orchestration from browser implementations |
+| Microsoft.NET.Test.Sdk 18.11.0 | Test execution host | `NuciWeb.Automation.UnitTests` | Tests run through `dotnet test` |
+| NUnit3TestAdapter 6.3.1 | NUnit test discovery and execution | `NuciWeb.Automation.UnitTests` | Test results are reported by .NET test infrastructure |
 
 ## 🚀 Deployment and Operations
 
@@ -234,9 +234,15 @@ NuciWeb.Automation is packaged as a NuGet library and runs in the host process o
 
 ## ✅ Testing and Verification
 
-The `NuciWeb.Automation.UnitTests` project uses NUnit and Moq to verify `WebProcessor` behavior through test doubles. Test fixtures cover navigation, tab management, element existence and state, text, interaction, waits, scripts, alerts, and element attributes. The tests verify the shared orchestration boundary; real browser-driver integration is outside the repository's current test project.
+The `NuciWeb.Automation.UnitTests` project uses NUnit and Moq to verify `WebProcessor` behavior through test doubles. Test fixtures cover navigation, tab management, element existence and state, text, interaction, waits, scripts, alerts, element attributes, checkboxes, and select options. The tests verify the shared orchestration boundary; real browser-driver integration is outside the repository's current test project.
 
 Execute the principal automated verification with:
+
+```bash
+dotnet test
+```
+
+Test-specific verification can also target the unit-test project directly:
 
 ```bash
 dotnet test NuciWeb.Automation.UnitTests/NuciWeb.Automation.UnitTests.csproj

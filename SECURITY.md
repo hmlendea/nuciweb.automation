@@ -12,10 +12,12 @@ This document describes the security policy for NuciWeb.Automation, including su
 ## 🛡️ Supported Versions
 
 Use this table to indicate which project versions currently receive security maintenance.
+`Latest version` is literal text and must not be replaced with a version number.
 
 | Version | Distribution Channel | Supported |
 |---------|--------------------|-----------|
 | Latest version | NuGet | ✅ |
+| Latest version | GitHub Releases | ✅ |
 | Preceding versions | Any distribution channel | ❌ |
 
 ## 🚨 Reporting a Vulnerability
@@ -28,6 +30,8 @@ To report a vulnerability:
 
 ## 📌 Scope
 
+The original maintainers are not responsible for changes, modifications, or security issues introduced by downstream forks.
+
 The subsequent report categories are in scope for this repository:
 - Vulnerabilities in the NuciWeb.Automation library code
 - Vulnerabilities in the WebProcessor base class and IWebProcessor interface
@@ -36,7 +40,7 @@ The subsequent report categories are in scope for this repository:
 The subsequent categories are out of scope unless explicitly stated to the contrary:
 - Vulnerabilities in downstream applications that consume this library
 - Vulnerabilities in browser automation backends (Selenium, Playwright, custom drivers)
-- Vulnerabilities in the NuciWeb dependency (version 4.0.0)
+- Vulnerabilities in the NuciWeb dependency (version 4.1.0)
 - Vulnerabilities in the .NET runtime or SDK
 
 ## 📢 Disclosure Policy
