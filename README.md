@@ -1,5 +1,6 @@
 [![Donate](https://img.shields.io/badge/-%E2%99%A5%20Donate-%23ff69b4)](https://hmlendea.go.ro/funding)
 [![Build Status](https://github.com/hmlendea/nuciweb.automation/actions/workflows/dotnet.yml/badge.svg)](https://github.com/hmlendea/nuciweb.automation/actions/workflows/dotnet.yml)
+[![Security Scan](https://github.com/hmlendea/nuciweb.automation/actions/workflows/security.yml/badge.svg)](https://github.com/hmlendea/nuciweb.automation/actions/workflows/security.yml)
 [![Latest Release](https://img.shields.io/github/v/release/hmlendea/nuciweb.automation)](https://github.com/hmlendea/nuciweb.automation/releases/latest)
 [![NuGet](https://img.shields.io/nuget/v/NuciWeb.Automation)](https://nuget.org/packages/NuciWeb.Automation)
 [![License](https://img.shields.io/github/license/hmlendea/nuciweb.automation)](https://github.com/hmlendea/nuciweb.automation/blob/master/LICENSE)
@@ -33,6 +34,7 @@ NuciWeb.Automation is a .NET library that provides a backend-agnostic abstractio
 - [Contributing](#contributing)
 - [Code of Conduct](#code-of-conduct)
 - [Security](#security)
+- [Support](#support)
 - [Project Engagement](#project-engagement)
 - [License](#license)
 
@@ -153,6 +155,7 @@ dotnet format
 | Workflow | Purpose | What it does |
 |----------|---------|--------------|
 | [`.NET`](https://github.com/hmlendea/nuciweb.automation/blob/master/.github/workflows/dotnet.yml) | Build validation | Restores, builds, and tests the solution on pushes and pull requests to `master`. |
+| [`Security`](https://github.com/hmlendea/nuciweb.automation/blob/master/.github/workflows/security.yml) | Security validation | Checks vulnerable NuGet packages and runs CodeQL analysis for C# on pushes, pull requests, and a weekly schedule. |
 | [`GitHub Release`](https://github.com/hmlendea/nuciweb.automation/blob/master/.github/workflows/github-release.yml) | GitHub package release | Packs the project and uploads the NuGet package to a published GitHub release with a SHA256 checksum. |
 | [`NuGet.org Release`](https://github.com/hmlendea/nuciweb.automation/blob/master/.github/workflows/nuget-release.yml) | NuGet publication | Packs the project and publishes it to NuGet.org after a GitHub release is published. |
 
