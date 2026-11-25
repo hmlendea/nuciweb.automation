@@ -5,7 +5,6 @@ This document describes how NuciWeb.Automation handles personal data. NuciWeb.Au
 ## 📑 Table of Contents
 
 - [What This Document Covers](#what-this-document-covers)
-- [Self-Hosted Deployments](#self-hosted-deployments)
 - [Data We Handle](#data-we-handle)
 - [Processing and Use](#processing-and-use)
 - [Storage, Retention, and Deletion](#storage-retention-and-deletion)
@@ -17,10 +16,6 @@ This document describes how NuciWeb.Automation handles personal data. NuciWeb.Au
 ## 🔎 What This Document Covers
 
 This document describes how NuciWeb.Automation at https://github.com/hmlendea/nuciweb.automation handles personal data. It covers the library behaviour and verified integrations described below. Where the software is self-hosted, the instance operator may have separate responsibilities described below.
-
-## 🏠 Self-Hosted Deployments
-
-NuciWeb.Automation is a library that developers integrate into their own applications. The library does not operate as a service and does not send data to the project maintainers. The consuming application and its chosen browser automation backend (for example, Selenium, Playwright, or a custom driver) control all browser interactions, data flows, storage, logs, backups, access controls, retention, and request handling. The project maintainers do not receive telemetry, crash reports, update checks, or any other data from applications that use this library.
 
 ## 📥 Data We Handle
 
@@ -52,15 +47,17 @@ The library does not store personal data. It holds only transient in-memory stat
 
 ## 🔗 External Processing and Integrations
 
-The library has no built-in external data transfers. It depends on the `NuciWeb` package (version 4.0.0) for shared web utilities, but that dependency does not introduce personal data processing by this library. Any external processing is determined by the concrete browser automation backend chosen by the consuming application.
+The library has no built-in external data transfers. It depends on the `NuciWeb` package (version 4.1.0) for shared web utilities, but that dependency does not introduce personal data processing by this library. Any external processing is determined by the concrete browser automation backend chosen by the consuming application.
 
 | Service or integration | Purpose | Data involved | Configuration or documentation |
 |-----------------------|---------|---------------|--------------------------------|
-| NuciWeb (4.0.0) | Shared web utilities | None | https://www.nuget.org/packages/NuciWeb |
+| NuciWeb (4.1.0) | Shared web utilities | None | https://www.nuget.org/packages/NuciWeb |
 
 ## 🛡️ Data Protection and Security
 
 The library follows standard .NET secure coding practices. It does not handle secrets, credentials, or personal data. The consuming application and its backend are responsible for securing browser sessions, managing authentication credentials, protecting logs, and applying network and access controls appropriate to their deployment.
+
+The original maintainers are not responsible for changes, modifications, or privacy issues introduced by downstream forks.
 
 ## 🔄 Document Changes
 
