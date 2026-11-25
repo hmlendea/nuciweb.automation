@@ -179,7 +179,19 @@ NuciWeb.Automation is an in-process .NET library that separates shared browser-a
 
 See the [architecture documentation](./ARCHITECTURE.md) for the system context, principal components, runtime flows, ownership boundaries, dependencies, constraints, and extension points.
 
-## 🛡️ Privacy and Data
+## � Documentation
+
+The repository documentation records the library's public contract, implementation boundaries, execution flows, testing model, and maintenance guidance.
+
+| Resource | Description |
+|----------|-------------|
+| [Documentation index](./docs/INDEX.md) | Navigation catalogue for the generated documentation. |
+| [Quick start](./docs/quick-start.md) | Installation, first use, and adapter implementation guidance. |
+| [Architecture deep dive](./docs/architecture.md) | Component boundaries and delegation rules. |
+| [API reference](./docs/api-reference/INDEX.md) | Public interface and adapter-contract reference. |
+| [Execution flows](./docs/flows/navigation-and-tab-lifecycle.md) | Navigation, DOM interaction, waits, scripts, alerts, and selection. |
+
+## �🛡️ Privacy and Data
 
 NuciWeb.Automation does not collect, transmit, or process personal data. It provides a backend-agnostic browser automation abstraction; any data handling occurs in the consuming application and its chosen driver.
 
