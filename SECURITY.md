@@ -8,6 +8,7 @@ This document describes the security policy for NuciWeb.Automation, including su
 - [Reporting a Vulnerability](#reporting-a-vulnerability)
 - [Scope](#scope)
 - [Disclosure Policy](#disclosure-policy)
+- [Automated Security Scanning](#automated-security-scanning)
 
 ## 🛡️ Supported Versions
 
@@ -50,3 +51,11 @@ This project follows coordinated disclosure:
 2. A remediation plan is prepared and validated.
 3. Public disclosure is published after a fix, mitigation, or agreed risk decision is available.
 4. Credit is attributed in accordance with reporter preference and project policy.
+
+## 🔍 Automated Security Scanning
+
+This repository runs automated security scans on pushes, pull requests, and a weekly scheduled run. The scan includes:
+- **NuGet packages** Vulnerability checks include transitive dependencies.
+- **C# source code** CodeQL analysis builds the solution and uploads results to GitHub Code Scanning.
+
+Results are published to the [Security](https://github.com/hmlendea/nuciweb.automation/security) tab and the [Actions](https://github.com/hmlendea/nuciweb.automation/actions/workflows/security.yml) workflow page.
